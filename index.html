@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <style>
+      body,
+      html {
+        height: 100%;
+        margin: 0;
+        padding: 0;
+      }
+
+      .container {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100%;
+        background-color: #f3f3f3;
+      }
+
+      .card-container {
+        position: relative;
+        perspective: 1000px;
+      }
+
+      .card {
+        width: 300px;
+        height: 400px;
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%) rotateY(0deg);
+        background-image: url('https://i.pinimg.com/564x/d5/de/9a/d5de9ac241efddd2276c1c2f498b115f.jpg');
+        border-radius: 10px;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        padding-top: 1rem;
+        padding-bottom: 1rem;
+        font-family: 'Comic Sans MS', cursive;
+        font-size: 12px;
+        text-align: center;
+        color: #333;
+        transition: transform 0.5s;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+      }
+
+      .card.stacked {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%) rotate(15deg);
+        z-index: 0;
+      }
+
+      .card.stacked:nth-child(3) {
+        transform: translate(-50%, -50%) rotate(-25deg);
+      }
+
+      .control-button {
+        width: 250px;
+        height: 40px;
+        background-color: #333;
+        color: #fff;
+        border: none;
+        border-radius: 8px;
+        font-family: Arial, sans-serif;
+        font-size: 14px;
+        cursor: pointer;
+        margin-top: 20px;
+        outline: none;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        position: fixed;
+        bottom: 20px;
+        left: 50%;
+        transform: translateX(-50%);
+      }
+
+      .control-button:hover {
+        background-color: #555;
+      }
+
+      .control-button:active {
+        background-color: #111;
+      }
+
+      .card-header {
+        font-family: 'Helvetica', sans-serif;
+        font-size: 16px;
+        font-weight: bold;
+        font-style: italic;
+        text-transform: uppercase;
+        padding: 10px;
+        text-align: center;
+      }
+
+      .card-footer {
+        font-family: 'Comic Sans MS', cursive;
+        font-size: 10px;
+        text-align: center;
+        margin-top: 10px;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <div class="card-container">
+        <div class="card">
+          <div class="card-header">
+            <span style="font-weight: 900">DES</span>CON<span
+              style="font-weight: bold"
+              >E</span
+            >CTADOS
+          </div>
+          <p>Pregunta 1</p>
+          <div class="card-footer">@enpalabrass</div>
+        </div>
+        <div class="card stacked"></div>
+        <div class="card stacked"></div>
+      </div>
+    </div>
+
+    <button class="control-button" onclick="dealCard()">Deal Card</button>
+
+    <script>
+      var questions = [
+        '¿Solés culpar a otras personas por lo que te pasa? ¿En qué situaciones?',
+        '¿Tenés alguna fuente de motivación hoy en día? ¿Cuál es o podría ser?',
+        'Cuando te sentís bien con vos mismo/a, ¿con quién te gusta estar?',
+        '¿Te dedicás tiempo a vos mismo/a? ¿Qué hacés en esos momentos?',
+        '¿Una buena decisión?',
+        '¿Una persona que te alivie en momentos tristes?',
+        '¿Te define la opinión de los/as demás? ',
+        '¿Reconocés tus defectos? ¿Y tus virtudes? ¿Cuáles son? ',
+        '¿Qué actitudes no te gustan pero las tolerás en una persona? ¿Y cuáles valorás?',
+        'Perdonar o pedir perdón. ¿Cuál te cuesta más?',
+        'Nombrá tres características que te definan. ',
+        '¿Qué disfrutás de tu cotidianidad? ¿Y qué no? ',
+        '¿Qué actividades te divertían antes y ahora no?',
+        '¿Qué destacás de tus amistades?',
+        '¿Qué destacás de las personas que te criaron?',
+        '¿Te permitís mostrarte vulnerable? ¿Con quién?',
+        '¿Qué buscás en una pareja?',
+        '¿Qué primera impresión creés que das?',
+      ]
+
+      function dealCard() {
+        var cardContainer = document.querySelector('.card-container')
+        var stackedCards = document.querySelectorAll('.card.stacked')
+        var randomQuestion =
+          questions[Math.floor(Math.random() * questions.length)]
+        var newCard = document.createElement('div')
+
+        newCard.classList.add('card')
+        newCard.innerHTML =
+          '<div class="card-header"><span style="font-weight: 900;">DES</span>CON<span style="font-weight: bold;">E</span>CTADOS</div><p style="font-weight: 900; font-size: 20px; padding: 1rem">' +
+          randomQuestion +
+          '</p><div class="card-footer">@enpalabrass</div>'
+
+        cardContainer.appendChild(newCard)
+
+        if (cardContainer.children.length > 6) {
+          cardContainer.removeChild(cardContainer.children[0])
+        }
+
+        stackedCards.forEach(function (card) {
+          var randomRotation = Math.floor(Math.random() * 30) - 10
+          card.style.transform =
+            'translate(-50%, -50%) rotate(' + randomRotation + 'deg)'
+        })
+
+        newCard.style.transform = 'translateY(-1000px)'
+        setTimeout(function () {
+          newCard.style.transform =
+            'translate(-50%, -50%) rotateY(0deg) rotate(' +
+            (Math.floor(Math.random() * 25) - 5) +
+            'deg)'
+        }, 10)
+      }
+    </script>
+  </body>
+</html>

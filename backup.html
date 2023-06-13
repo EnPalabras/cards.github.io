@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <style>
+      body,
+      html {
+        height: 100%;
+        margin: 0;
+        padding: 0;
+      }
+
+      .container {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100%;
+        background-color: #f3f3f3;
+      }
+
+      .card-container {
+        position: relative;
+        perspective: 1000px;
+      }
+
+      .card {
+        width: 250px;
+        height: 350px;
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%) rotateY(0deg);
+        /* background: linear-gradient(90deg, snow 0px, #ddcdcd 5px); */
+        background-image: url('https://i.pinimg.com/564x/d5/de/9a/d5de9ac241efddd2276c1c2f498b115f.jpg');
+        border-radius: 10px;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        padding-top: 1rem;
+        padding-bottom: 1rem;
+
+        font-family: 'Comic Sans MS', cursive;
+        font-size: 12px;
+        text-align: center;
+        color: #333;
+        transition: transform 0.5s;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+      }
+
+      .card.stacked {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%) rotate(15deg);
+        z-index: 0;
+      }
+
+      .card.stacked:nth-child(3) {
+        transform: translate(-50%, -50%) rotate(-25deg);
+      }
+
+      .control-button {
+        width: 200px;
+        height: 40px;
+        background-color: #333;
+        color: #fff;
+        border: none;
+        border-radius: 8px;
+        font-family: Arial, sans-serif;
+        font-size: 14px;
+        cursor: pointer;
+        margin-top: 20px;
+        outline: none;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        position: fixed;
+        bottom: 20px;
+        left: 50%;
+        transform: translateX(-50%);
+      }
+
+      .control-button:hover {
+        background-color: #555;
+      }
+
+      .control-button:active {
+        background-color: #111;
+      }
+
+      .card-header {
+        font-family: 'Helvetica', sans-serif;
+        font-weight: bold;
+        font-style: italic;
+        text-transform: uppercase;
+        padding: 10px;
+        text-align: center;
+      }
+
+      .card-footer {
+        font-family: 'Comic Sans MS', cursive;
+        font-size: 10px;
+        text-align: center;
+        margin-top: 10px;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <div class="card-container">
+        <div class="card">
+          <div class="card-header">
+            <span style="font-weight: bold">DES</span>CON<span
+              style="font-weight: bold"
+              >E</span
+            >CTADOS
+          </div>
+          <p>Pregunta 1</p>
+          <div class="card-footer">@enpalabrass</div>
+        </div>
+        <div class="card stacked"></div>
+        <div class="card stacked"></div>
+      </div>
+    </div>
+
+    <button class="control-button" onclick="dealCard()">Deal Card</button>
+
+    <script>
+      var questions = [
+        '¿Qué comida te gusta más?',
+        'Si pudieras tener una cena con cualquier persona, ¿quién sería?',
+        '¿Cuál es tu película favorita?',
+        'Si pudieras vivir en cualquier época de la historia, ¿cuál sería?',
+        '¿Qué te gusta hacer en tu tiempo libre?',
+        '¿Cuál es tu hobby favorito?',
+        '¿Cuál es tu mayor logro?',
+        'Si pudieras cambiar algo del mundo, ¿qué cambiarías?',
+        '¿Cuál es tu deporte favorito?',
+        'Si pudieras aprender cualquier habilidad instantáneamente, ¿cuál sería?',
+      ]
+
+      function dealCard() {
+        var cardContainer = document.querySelector('.card-container')
+        var stackedCards = document.querySelectorAll('.card.stacked')
+        var randomQuestion =
+          questions[Math.floor(Math.random() * questions.length)]
+        var newCard = document.createElement('div')
+
+        newCard.classList.add('card')
+
+        newCard.innerHTML =
+          '<div class="card-header"><span style="font-weight: 900;">DES</span>CON<span style="font-weight: bold;">E</span>CTADOS</div><p style="font-weight: 900; font-size: 16px">' +
+          randomQuestion +
+          '</p><div class="card-footer">@enpalabrass</div>'
+
+        cardContainer.appendChild(newCard)
+
+        stackedCards.forEach(function (card) {
+          var randomRotation = Math.floor(Math.random() * 40) - 20
+          card.style.transform =
+            'translate(-50%, -50%) rotate(' + randomRotation + 'deg)'
+        })
+
+        newCard.style.transform = 'translateY(-1000px)'
+        setTimeout(function () {
+          newCard.style.transform =
+            'translate(-50%, -50%) rotateY(0deg) rotateY(0deg)'
+        }, 10)
+      }
+    </script>
+  </body>
+</html>
