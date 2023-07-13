@@ -122,7 +122,9 @@
       </div>
     </div>
 
-    <button class="control-button" onclick="dealCard()">Deal Card</button>
+    <button class="control-button" onclick="dealManyCards()">
+      Siguiente Carta
+    </button>
 
     <script>
       var questions = [
@@ -146,14 +148,35 @@
         '¿Qué primera impresión creés que das?',
       ]
 
+      function dealManyCards() {
+        for (var i = 0; i < 10; i++) {
+          setTimeout(function () {
+            dealCard()
+          }, 400 * i)
+        }
+      }
+
       function dealCard() {
         var cardContainer = document.querySelector('.card-container')
         var stackedCards = document.querySelectorAll('.card.stacked')
         var randomQuestion =
           questions[Math.floor(Math.random() * questions.length)]
+
+        if (cardContainer.children.length > 6) {
+          cardContainer.removeChild(cardContainer.children[1])
+        }
+
+        // stackedCards.forEach(function (card) {
+        //   var randomRotation = Math.floor(Math.random() * 30) - 10
+        //   card.style.transform =
+        //     'translate(-50%, -50%) rotate(' + randomRotation + 'deg)'
+        // })
+
         var newCard = document.createElement('div')
 
         newCard.classList.add('card')
+        newCard.classList.add('stacked')
+
         newCard.innerHTML =
           '<div class="card-header"><span style="font-weight: 900;">DES</span>CON<span style="font-weight: bold;">E</span>CTADOS</div><p style="font-weight: 900; font-size: 20px; padding: 1rem">' +
           randomQuestion +
@@ -161,22 +184,10 @@
 
         cardContainer.appendChild(newCard)
 
-        if (cardContainer.children.length > 6) {
-          cardContainer.removeChild(cardContainer.children[0])
-        }
-
-        stackedCards.forEach(function (card) {
-          var randomRotation = Math.floor(Math.random() * 30) - 10
-          card.style.transform =
-            'translate(-50%, -50%) rotate(' + randomRotation + 'deg)'
-        })
-
         newCard.style.transform = 'translateY(-1000px)'
         setTimeout(function () {
           newCard.style.transform =
-            'translate(-50%, -50%) rotateY(0deg) rotate(' +
-            (Math.floor(Math.random() * 25) - 5) +
-            'deg)'
+            'translate(-50%, -50%) rotateY(0deg) rotate(0deg)'
         }, 10)
       }
     </script>

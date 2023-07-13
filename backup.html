@@ -123,21 +123,43 @@
       </div>
     </div>
 
-    <button class="control-button" onclick="dealCard()">Deal Card</button>
+    <button class="control-button" onclick="dealManyCards()">
+      Nueva Carta
+    </button>
 
     <script>
       var questions = [
-        '¿Qué comida te gusta más?',
-        'Si pudieras tener una cena con cualquier persona, ¿quién sería?',
-        '¿Cuál es tu película favorita?',
-        'Si pudieras vivir en cualquier época de la historia, ¿cuál sería?',
-        '¿Qué te gusta hacer en tu tiempo libre?',
-        '¿Cuál es tu hobby favorito?',
-        '¿Cuál es tu mayor logro?',
-        'Si pudieras cambiar algo del mundo, ¿qué cambiarías?',
-        '¿Cuál es tu deporte favorito?',
-        'Si pudieras aprender cualquier habilidad instantáneamente, ¿cuál sería?',
+        '¿Solés culpar a otras personas por lo que te pasa? ¿En qué situaciones?',
+        '¿Tenés alguna fuente de motivación hoy en día? ¿Cuál es o podría ser?',
+        'Cuando te sentís bien con vos mismo/a, ¿con quién te gusta estar?',
+        '¿Te dedicás tiempo a vos mismo/a? ¿Qué hacés en esos momentos?',
+        '¿Una buena decisión?',
+        '¿Una persona que te alivie en momentos tristes?',
+        '¿Te define la opinión de los/as demás? ',
+        '¿Reconocés tus defectos? ¿Y tus virtudes? ¿Cuáles son? ',
+        '¿Qué actitudes no te gustan pero las tolerás en una persona? ¿Y cuáles valorás?',
+        'Perdonar o pedir perdón. ¿Cuál te cuesta más?',
+        'Nombrá tres características que te definan. ',
+        '¿Qué disfrutás de tu cotidianidad? ¿Y qué no? ',
+        '¿Qué actividades te divertían antes y ahora no?',
+        '¿Qué destacás de tus amistades?',
+        '¿Qué destacás de las personas que te criaron?',
+        '¿Te permitís mostrarte vulnerable? ¿Con quién?',
+        '¿Qué buscás en una pareja?',
+        '¿Qué primera impresión creés que das?',
       ]
+
+      function dealManyCards() {
+        let i = 0
+        let cardDealer = setInterval(function () {
+          dealCard()
+          i++
+          console.log(i)
+          if (i === 9) {
+            clearInterval(cardDealer)
+          }
+        }, 400)
+      }
 
       function dealCard() {
         var cardContainer = document.querySelector('.card-container')
@@ -155,17 +177,23 @@
 
         cardContainer.appendChild(newCard)
 
-        stackedCards.forEach(function (card) {
-          var randomRotation = Math.floor(Math.random() * 40) - 20
-          card.style.transform =
-            'translate(-50%, -50%) rotate(' + randomRotation + 'deg)'
-        })
+        if (cardContainer.children.length > 6) {
+          cardContainer.removeChild(
+            cardContainer.children[cardContainer.children.length - 3]
+          )
+        }
 
         newCard.style.transform = 'translateY(-1000px)'
         setTimeout(function () {
           newCard.style.transform =
             'translate(-50%, -50%) rotateY(0deg) rotateY(0deg)'
-        }, 10)
+        }, 100)
+
+        stackedCards.forEach(function (card) {
+          var randomRotation = Math.floor(Math.random() * 40) - 20
+          card.style.transform =
+            'translate(-50%, -50%) rotate(' + randomRotation + 'deg)'
+        })
       }
     </script>
   </body>
