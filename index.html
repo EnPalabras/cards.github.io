@@ -24,12 +24,13 @@
       }
 
       .card {
-        width: 300px;
-        height: 400px;
+        width: 250px;
+        height: 350px;
         position: absolute;
         top: 50%;
         left: 50%;
         transform: translate(-50%, -50%) rotateY(0deg);
+        /* background: linear-gradient(90deg, snow 0px, #ddcdcd 5px); */
         background-image: url('https://i.pinimg.com/564x/d5/de/9a/d5de9ac241efddd2276c1c2f498b115f.jpg');
         border-radius: 10px;
         display: flex;
@@ -37,6 +38,7 @@
         justify-content: space-between;
         padding-top: 1rem;
         padding-bottom: 1rem;
+
         font-family: 'Comic Sans MS', cursive;
         font-size: 12px;
         text-align: center;
@@ -58,7 +60,7 @@
       }
 
       .control-button {
-        width: 250px;
+        width: 200px;
         height: 40px;
         background-color: #333;
         color: #fff;
@@ -88,7 +90,6 @@
 
       .card-header {
         font-family: 'Helvetica', sans-serif;
-        font-size: 16px;
         font-weight: bold;
         font-style: italic;
         text-transform: uppercase;
@@ -109,7 +110,7 @@
       <div class="card-container">
         <div class="card">
           <div class="card-header">
-            <span style="font-weight: 900">DES</span>CON<span
+            <span style="font-weight: bold">DES</span>CON<span
               style="font-weight: bold"
               >E</span
             >CTADOS
@@ -123,7 +124,7 @@
     </div>
 
     <button class="control-button" onclick="dealManyCards()">
-      Siguiente Carta
+      Nueva Carta
     </button>
 
     <script>
@@ -149,11 +150,15 @@
       ]
 
       function dealManyCards() {
-        for (var i = 0; i < 10; i++) {
-          setTimeout(function () {
-            dealCard()
-          }, 400 * i)
-        }
+        let i = 0
+        let cardDealer = setInterval(function () {
+          dealCard()
+          i++
+          console.log(i)
+          if (i === 9) {
+            clearInterval(cardDealer)
+          }
+        }, 400)
       }
 
       function dealCard() {
@@ -161,34 +166,34 @@
         var stackedCards = document.querySelectorAll('.card.stacked')
         var randomQuestion =
           questions[Math.floor(Math.random() * questions.length)]
-
-        if (cardContainer.children.length > 6) {
-          cardContainer.removeChild(cardContainer.children[1])
-        }
-
-        // stackedCards.forEach(function (card) {
-        //   var randomRotation = Math.floor(Math.random() * 30) - 10
-        //   card.style.transform =
-        //     'translate(-50%, -50%) rotate(' + randomRotation + 'deg)'
-        // })
-
         var newCard = document.createElement('div')
 
         newCard.classList.add('card')
-        newCard.classList.add('stacked')
 
         newCard.innerHTML =
-          '<div class="card-header"><span style="font-weight: 900;">DES</span>CON<span style="font-weight: bold;">E</span>CTADOS</div><p style="font-weight: 900; font-size: 20px; padding: 1rem">' +
+          '<div class="card-header"><span style="font-weight: 900;">DES</span>CON<span style="font-weight: bold;">E</span>CTADOS</div><p style="font-weight: 900; font-size: 16px">' +
           randomQuestion +
           '</p><div class="card-footer">@enpalabrass</div>'
 
         cardContainer.appendChild(newCard)
 
+        if (cardContainer.children.length > 6) {
+          cardContainer.removeChild(
+            cardContainer.children[cardContainer.children.length - 3]
+          )
+        }
+
         newCard.style.transform = 'translateY(-1000px)'
         setTimeout(function () {
           newCard.style.transform =
-            'translate(-50%, -50%) rotateY(0deg) rotate(0deg)'
-        }, 10)
+            'translate(-50%, -50%) rotateY(0deg) rotateY(0deg)'
+        }, 100)
+
+        stackedCards.forEach(function (card) {
+          var randomRotation = Math.floor(Math.random() * 40) - 20
+          card.style.transform =
+            'translate(-50%, -50%) rotate(' + randomRotation + 'deg)'
+        })
       }
     </script>
   </body>
