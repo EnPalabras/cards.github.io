@@ -1,6 +1,6 @@
 node_modules
 assets
 audio
-backup.html
-noUsar.html
+backup
+noUsar
 main.js
